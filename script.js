@@ -1,41 +1,41 @@
-// Initialize GSAP ScrollTrigger
-gsap.registerPlugin(ScrollTrigger);
-
-// Wait for the DOM to be loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Select all images with the scroll-image class
-    const images = document.querySelectorAll('.scroll-image');
+    gsap.registerPlugin(ScrollTrigger);
 
-    // Create animation for each image
-    images.forEach((image) => {
-        // Create a timeline for each image
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: image.parentElement, // Use the parent wrapper as trigger
-                start: "top center+=20%",
-                end: "bottom center-=20%",
-                toggleActions: "play none none reverse",
-                // markers: true, // Uncomment for debugging
-            }
-        });
-
-        // Add animations to the timeline
-        tl.to(image, {
-            opacity: 1,
-            scale: 1,
-            duration: 1.2,
-            ease: "power2.out"
-        });
+    // Calculate the total width of all gallery items plus gaps
+    const track = document.querySelector('.gallery-track');
+    const trackWidth = track.offsetWidth;
+    const windowWidth = window.innerWidth;
+    
+    // Create the horizontal scrolling effect
+    gsap.to('.gallery-track', {
+        x: -(trackWidth - windowWidth),
+        ease: "none",
+        scrollTrigger: {
+            trigger: ".gallery-container",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1,
+            pin: true,
+            invalidateOnRefresh: true,
+        }
     });
 
-    // Smooth scroll animation for the hero section
-    gsap.from('h1', {
-        y: 100,
-        opacity: 0,
-        duration: 1.5,
-        ease: "power3.out"
+    // Fade in effect for images as they enter the viewport
+    const images = gsap.utils.toArray('.gallery-item');
+    images.forEach((image) => {
+        gsap.fromTo(image, 
+            { opacity: 0 },
+            {
+                opacity: 1,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: image,
+                    start: "left center",
+                    end: "right center",
+                    horizontal: true,
+                    containerAnimation: gsap.to('.gallery-track', {x: -(trackWidth - windowWidth)}),
+                }
+            }
+        );
     });
 });
-
-// Optional: Add smooth scroll behavior for the entire page
-document.documentElement.style.scrollBehavior = 'smooth';
