@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+}
+
+.container img {
+    width: 60%;
+    margin: 20px 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    scroll-snap-align: center;
+}
+
+.container img.visible {
+    opacity: 1;
+}
