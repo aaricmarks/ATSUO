@@ -1,0 +1,25 @@
+// components/ImageTransition.js
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+export default function ImageTransition() {
+  const imgRef = useRef();
+
+  useEffect(() => {
+    gsap.to(imgRef.current, {
+      scrollTrigger: {
+        trigger: imgRef.current,
+        start: "top center",
+        end: "bottom center",
+        scrub: true,
+      },
+      opacity: 1,
+      y: 0,
+    });
+  }, []);
+
+  return <img ref={imgRef} src="/path/to/image.jpg" alt="Sample" style={{ opacity: 0, transform: 'translateY(50px)' }} />;
+}
