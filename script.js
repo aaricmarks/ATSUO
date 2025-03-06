@@ -1,17 +1,22 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const images = document.querySelectorAll('.image-item');
+document.addEventListener("DOMContentLoaded", function() {
+    const sections = document.querySelectorAll(".content");
 
-    const observer = new IntersectionObserver(entries => {
+    const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
             }
         });
-    }, {
-        threshold: 0.1
-    });
+    }, observerOptions);
 
-    images.forEach(image => {
-        observer.observe(image);
+    sections.forEach(section => {
+        observer.observe(section);
     });
 });
