@@ -5,95 +5,106 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #ffffff;
-    color: #000000;
-    line-height: 1.6;
-}
-
-header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.98);
-    padding: 20px 40px;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow-x: hidden;
 }
 
 nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1400px;
-    margin: 0 auto;
+    z-index: 100;
+    mix-blend-mode: difference;
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: 600;
-    letter-spacing: 1px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
 }
 
-.menu {
-    display: flex;
-    gap: 30px;
-}
-
-.menu-link {
+.menu a {
+    color: #ffffff;
     text-decoration: none;
-    color: #000000;
-    font-size: 16px;
+    margin-left: 2rem;
+    font-size: 1rem;
     transition: opacity 0.3s ease;
 }
 
-.menu-link:hover {
-    opacity: 0.6;
+.menu a:hover {
+    opacity: 0.7;
 }
 
-main {
-    padding-top: 100px;
-    padding-bottom: 50px;
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
 }
 
-.portfolio {
+h1 {
+    font-size: 5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    letter-spacing: 4px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.7;
+    letter-spacing: 2px;
+}
+
+.gallery {
+    padding: 2rem;
+}
+
+.gallery-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 40px;
 }
 
-.image-container {
-    margin: 200px 0;
+.image-wrapper {
+    margin: 15vh 0;
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(100px);
 }
 
-.portfolio-image {
+.image-wrapper img {
     width: 100%;
     height: auto;
     display: block;
 }
 
 footer {
+    padding: 4rem 2rem;
     text-align: center;
-    padding: 40px;
-    font-size: 14px;
-    opacity: 0.6;
+    opacity: 0.7;
+    font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {
-    header {
-        padding: 20px;
+    h1 {
+        font-size: 3rem;
     }
 
-    .portfolio {
-        padding: 0 20px;
+    .subtitle {
+        font-size: 1rem;
     }
 
-    .image-container {
-        margin: 100px 0;
+    .gallery {
+        padding: 1rem;
     }
 
-    .menu {
-        gap: 20px;
+    .image-wrapper {
+        margin: 10vh 0;
     }
 }
