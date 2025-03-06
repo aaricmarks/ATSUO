@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Webpage</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <img src="https://github.com/aaricmarks/ATSUO/blob/main/Subject%204.png?raw=true" alt="Subject 4">
+        <img src="https://github.com/aaricmarks/ATSUO/blob/main/IMG_0983.png?raw=true" alt="IMG 0983">
+        <img src="https://github.com/aaricmarks/ATSUO/blob/main/Subject%203.png?raw=true" alt="Subject 3">
+        <img src="https://github.com/aaricmarks/ATSUO/blob/main/Subject%2010.png?raw=true" alt="Subject 10">
+        <img src="https://github.com/aaricmarks/ATSUO/blob/main/Subject%202.png?raw=true" alt="Subject 2">
+        <img src="https://github.com/aaricmarks/ATSUO/blob/main/Subject%205.png?raw=true" alt="Subject 5">
+        <img src="https://github.com/aaricmarks/ATSUO/blob/main/Subject%207.png?raw=true" alt="Subject 7">
+        <img src="https://github.com/aaricmarks/ATSUO/blob/main/Subject%208.png?raw=true" alt="Subject 8">
+        <img src="https://github.com/aaricmarks/ATSUO/blob/main/Subject%209.png?raw=true" alt="Subject 9">
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
