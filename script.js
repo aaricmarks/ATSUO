@@ -1,48 +1,41 @@
 // Initialize GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
-// Loader Animation
-window.addEventListener('load', () => {
-    gsap.to('.loader', {
-        opacity: 0,
-        duration: 1,
-        onComplete: () => {
-            document.querySelector('.loader').style.display = 'none';
-        }
-    });
-});
-
-// Initialize scroll animations
-function initScrollAnimations() {
-    // Animate images on scroll
-    const images = document.querySelectorAll('.scroll-image');
-    
-    images.forEach((image) => {
-        gsap.fromTo(image,
-            {
-                opacity: 0,
-                scale: 1.1
-            },
-            {
-                opacity: 1,
-                scale: 1,
-                duration: 1.5,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: image,
-                    start: "top center",
-                    end: "bottom center",
-                    toggleActions: "play none none reverse",
-                }
-            }
-        );
-    });
-}
-
-// Initialize animations when DOM is loaded
+// Wait for the DOM to be loaded
 document.addEventListener('DOMContentLoaded', () => {
-    initScrollAnimations();
+    // Select all images with the scroll-image class
+    const images = document.querySelectorAll('.scroll-image');
+
+    // Create animation for each image
+    images.forEach((image) => {
+        // Create a timeline for each image
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: image.parentElement, // Use the parent wrapper as trigger
+                start: "top center+=20%",
+                end: "bottom center-=20%",
+                toggleActions: "play none none reverse",
+                // markers: true, // Uncomment for debugging
+            }
+        });
+
+        // Add animations to the timeline
+        tl.to(image, {
+            opacity: 1,
+            scale: 1,
+            duration: 1.2,
+            ease: "power2.out"
+        });
+    });
+
+    // Smooth scroll animation for the hero section
+    gsap.from('h1', {
+        y: 100,
+        opacity: 0,
+        duration: 1.5,
+        ease: "power3.out"
+    });
 });
 
-// Smooth scroll behavior for the entire page
+// Optional: Add smooth scroll behavior for the entire page
 document.documentElement.style.scrollBehavior = 'smooth';
