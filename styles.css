@@ -1,3 +1,9 @@
+:root {
+    --background: #0a0a0a;
+    --text: #ffffff;
+    --accent: #333333;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,42 +11,56 @@
 }
 
 body {
-    background-color: #0a0a0a;
-    color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     overflow-x: hidden;
 }
 
+/* Loader */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loader-text {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+/* Navigation */
 nav {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
     padding: 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     z-index: 100;
     mix-blend-mode: difference;
 }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    letter-spacing: 2px;
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.menu a {
-    color: #ffffff;
-    text-decoration: none;
-    margin-left: 2rem;
+.logo, .menu-toggle {
     font-size: 1rem;
-    transition: opacity 0.3s ease;
+    font-weight: 500;
+    cursor: pointer;
 }
 
-.menu a:hover {
-    opacity: 0.7;
-}
-
+/* Hero Section */
 .hero {
     height: 100vh;
     display: flex;
@@ -52,43 +72,34 @@ nav {
 
 h1 {
     font-size: 5rem;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 1rem;
-    letter-spacing: 4px;
 }
 
 .subtitle {
     font-size: 1.2rem;
     opacity: 0.7;
-    letter-spacing: 2px;
 }
 
+/* Gallery */
 .gallery {
-    padding: 2rem;
+    padding: 0 2rem;
 }
 
-.gallery-container {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.image-wrapper {
+.image-container {
     margin: 15vh 0;
-    opacity: 0;
-    transform: translateY(100px);
+    height: 80vh;
+    position: relative;
+    overflow: hidden;
 }
 
-.image-wrapper img {
+.scroll-image {
     width: 100%;
-    height: auto;
-    display: block;
-}
-
-footer {
-    padding: 4rem 2rem;
-    text-align: center;
-    opacity: 0.7;
-    font-size: 0.9rem;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.1);
+    transition: transform 2s ease;
 }
 
 @media (max-width: 768px) {
@@ -96,15 +107,8 @@ footer {
         font-size: 3rem;
     }
 
-    .subtitle {
-        font-size: 1rem;
-    }
-
-    .gallery {
-        padding: 1rem;
-    }
-
-    .image-wrapper {
+    .image-container {
+        height: 50vh;
         margin: 10vh 0;
     }
 }
