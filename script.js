@@ -1,41 +1,45 @@
-document.addEventListener('DOMContentLoaded', () => {
-    gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
-    // Calculate the total width of all gallery items plus gaps
-    const track = document.querySelector('.gallery-track');
-    const trackWidth = track.offsetWidth;
-    const windowWidth = window.innerWidth;
+// Wait for all images to load
+window.addEventListener('load', () => {
+    const imageContainer = document.querySelector('.image-container');
     
-    // Create the horizontal scrolling effect
-    gsap.to('.gallery-track', {
-        x: -(trackWidth - windowWidth),
+    // Calculate the total width of all images plus gaps
+    const totalWidth = Array.from(imageContainer.children).reduce((acc, el) => {
+        const style = window.getComputedStyle(el);
+        const width = el.offsetWidth;
+        const marginRight = parseInt(style.marginRight);
+        return acc + width + marginRight;
+    }, 0);
+
+    // Create the horizontal scroll animation
+    gsap.to('.image-container', {
+        x: -totalWidth + window.innerWidth,
         ease: "none",
         scrollTrigger: {
-            trigger: ".gallery-container",
+            trigger: ".gallery",
             start: "top top",
-            end: "bottom bottom",
+            end: "+=300%",
             scrub: 1,
             pin: true,
-            invalidateOnRefresh: true,
+            anticipatePin: 1,
         }
     });
 
-    // Fade in effect for images as they enter the viewport
-    const images = gsap.utils.toArray('.gallery-item');
-    images.forEach((image) => {
-        gsap.fromTo(image, 
-            { opacity: 0 },
-            {
-                opacity: 1,
-                duration: 1,
-                scrollTrigger: {
-                    trigger: image,
-                    start: "left center",
-                    end: "right center",
-                    horizontal: true,
-                    containerAnimation: gsap.to('.gallery-track', {x: -(trackWidth - windowWidth)}),
-                }
+    // Add parallax effect to images
+    document.querySelectorAll('.gallery-image').forEach((image, index) => {
+        gsap.to(image, {
+            scale: 1.1,
+            scrollTrigger: {
+                trigger: image.parentElement,
+                containerAnimation: ScrollTrigger.getById("scrollTrigger"),
+                start: "left center",
+                end: "right center",
+                scrub: true
             }
-        );
+        });
     });
 });
+
+// Smooth scroll behavior
+document.documentElement.style.scrollBehavior = 'smooth';
