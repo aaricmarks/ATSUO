@@ -1,69 +1,87 @@
-gsap.registerPlugin(ScrollTrigger);
+:root {
+    --background-color: #0a0a0a;
+    --text-color: #ffffff;
+    --spacing: 2rem;
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('.image-section');
-    const progressBar = document.querySelector('.progress-bar');
-    
-    // Set up the first image as active
-    sections[0].querySelector('.image-wrapper').classList.add('active');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    // Calculate total scroll height
-    const totalHeight = (sections.length - 1) * window.innerHeight;
-    
-    // Update progress bar
-    function updateProgress() {
-        const scrollPosition = window.pageYOffset;
-        const progress = (scrollPosition / totalHeight) * 100;
-        progressBar.style.width = `${Math.min(100, progress)}%`;
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow-x: hidden;
+    min-height: 700vh; /* Space for all images */
+}
+
+.container {
+    width: 100%;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: var(--spacing);
+    z-index: 100;
+    mix-blend-mode: difference;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.gallery {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-sequence {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-frame {
+    position: absolute;
+    width: 80vmin;
+    height: 80vmin;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: transform 0.5s ease;
+}
+
+.image-frame.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.sequence-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+@media (max-width: 768px) {
+    .image-frame {
+        width: 90vw;
+        height: 90vw;
     }
-
-    // Handle scroll events
-    window.addEventListener('scroll', () => {
-        updateProgress();
-        
-        sections.forEach((section, index) => {
-            const rect = section.getBoundingClientRect();
-            const wrapper = section.querySelector('.image-wrapper');
-            
-            // Calculate when the section is in view
-            if (rect.top < window.innerHeight * 0.5 && rect.bottom > window.innerHeight * 0.5) {
-                wrapper.classList.add('active');
-                
-                // Create horizontal movement
-                gsap.to(wrapper, {
-                    x: window.innerWidth * 0.1 * (rect.top / window.innerHeight),
-                    duration: 0.5,
-                    ease: "power1.out"
-                });
-            } else {
-                wrapper.classList.remove('active');
-            }
-        });
-    });
-
-    // Set up ScrollTrigger for each section
-    sections.forEach((section, index) => {
-        const wrapper = section.querySelector('.image-wrapper');
-        
-        ScrollTrigger.create({
-            trigger: section,
-            start: "top center",
-            end: "bottom center",
-            onEnter: () => {
-                wrapper.classList.add('active');
-            },
-            onLeave: () => {
-                wrapper.classList.remove('active');
-            },
-            onEnterBack: () => {
-                wrapper.classList.add('active');
-            },
-            onLeaveBack: () => {
-                wrapper.classList.remove('active');
-            }
-        });
-    });
-});
-
-// Smooth scroll behavior
-document.documentElement.style.scrollBehavior = 'smooth';
+}
