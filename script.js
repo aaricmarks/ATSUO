@@ -32,26 +32,19 @@ window.addEventListener('load', () => {
             opacity: 1,
             scale: 1,
             duration: duration / 2,
+            ease: "power2.inOut"
         }, delay)
         .to(image, {
             opacity: 0,
-            scale: 1.2,
+            scale: 1.1,
             duration: duration / 2,
+            ease: "power2.inOut"
         }, delay + duration / 2);
     });
 
     // Add scroll progress indicator
     const progressBar = document.createElement('div');
-    progressBar.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 0%;
-        height: 2px;
-        background-color: white;
-        z-index: 1000;
-        transition: width 0.1s ease;
-    `;
+    progressBar.className = 'progress-bar';
     document.body.appendChild(progressBar);
 
     // Update progress bar
@@ -63,6 +56,20 @@ window.addEventListener('load', () => {
             progressBar.style.width = `${self.progress * 100}%`;
         }
     });
+
+    // Ensure images maintain aspect ratio
+    const preloadImages = () => {
+        const imageElements = document.querySelectorAll('.sequence-image');
+        imageElements.forEach(img => {
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '100%';
+            img.style.width = 'auto';
+            img.style.height = 'auto';
+        });
+    };
+
+    // Run after images are loaded
+    window.addEventListener('load', preloadImages);
 });
 
 // Smooth scroll behavior
