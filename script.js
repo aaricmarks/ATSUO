@@ -1,6 +1,5 @@
 gsap.registerPlugin(ScrollTrigger);
 
-// Wait for all images to load
 window.addEventListener('load', () => {
     const imageContainer = document.querySelector('.image-container');
     
@@ -19,17 +18,18 @@ window.addEventListener('load', () => {
         scrollTrigger: {
             trigger: ".gallery",
             start: "top top",
-            end: "+=300%",
-            scrub: 1,
+            end: "+=250%", // Reduced from 300% for faster scrolling
+            scrub: 0.8, // Smoother scrub effect
             pin: true,
             anticipatePin: 1,
         }
     });
 
-    // Add parallax effect to images
+    // Add subtle floating effect to images
     document.querySelectorAll('.gallery-image').forEach((image, index) => {
         gsap.to(image, {
-            scale: 1.1,
+            scale: 0.95, // Smaller scale change for subtle effect
+            y: -10, // Slight vertical movement
             scrollTrigger: {
                 trigger: image.parentElement,
                 containerAnimation: ScrollTrigger.getById("scrollTrigger"),
@@ -43,3 +43,31 @@ window.addEventListener('load', () => {
 
 // Smooth scroll behavior
 document.documentElement.style.scrollBehavior = 'smooth';
+
+// Optional: Add a subtle parallax effect to the images
+document.querySelectorAll('.image-wrapper').forEach(wrapper => {
+    wrapper.addEventListener('mousemove', (e) => {
+        const rect = wrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const xPercent = (x / rect.width - 0.5) * 5;
+        const yPercent = (y / rect.height - 0.5) * 5;
+        
+        gsap.to(wrapper.querySelector('.gallery-image'), {
+            duration: 0.5,
+            x: xPercent,
+            y: yPercent,
+            ease: 'power2.out'
+        });
+    });
+    
+    wrapper.addEventListener('mouseleave', () => {
+        gsap.to(wrapper.querySelector('.gallery-image'), {
+            duration: 0.5,
+            x: 0,
+            y: 0,
+            ease: 'power2.out'
+        });
+    });
+});
