@@ -2,6 +2,7 @@
     --background-color: #0a0a0a;
     --text-color: #ffffff;
     --spacing: 2rem;
+    --progress-bar-height: 2px;
 }
 
 * {
@@ -15,14 +16,11 @@ body {
     color: var(--text-color);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     overflow-x: hidden;
-    min-height: 300vh;
 }
 
 .container {
     width: 100%;
-    max-width: 1920px;
-    margin: 0 auto;
-    padding: 2rem;
+    position: relative;
 }
 
 header {
@@ -41,30 +39,33 @@ h1 {
     letter-spacing: 0.1em;
 }
 
-.gallery {
-    position: fixed;
-    top: 0;
-    left: 0;
+.sections-container {
+    position: relative;
     width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
 }
 
-.image-container {
+.image-section {
+    height: 100vh;
+    width: 100%;
+    position: relative;
     display: flex;
-    gap: 4rem;
-    padding: 4rem;
-    will-change: transform;
+    align-items: center;
+    justify-content: center;
 }
 
 .image-wrapper {
-    flex: 0 0 auto;
-    width: 40vw;
-    height: 50vh;
+    width: 80vw;
+    height: 80vh;
     position: relative;
     overflow: hidden;
-    border-radius: 4px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.image-wrapper.active {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .gallery-image {
@@ -72,42 +73,28 @@ h1 {
     height: 100%;
     object-fit: cover;
     object-position: center;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-    transform: scale(0.85);
 }
 
-/* Special styling for Subject 5 */
-.subject-5 .gallery-image {
-    transform: scale(0.65); /* Extra zoom out for Subject 5 */
+.progress-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--progress-bar-height);
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 100;
 }
 
-.subject-5:hover .gallery-image {
-    transform: scale(0.7); /* Slightly larger on hover but still more zoomed out */
-}
-
-.gallery-image:hover {
-    opacity: 1;
-    transform: scale(0.9);
-    transition: all 0.5s ease;
+.progress-bar {
+    height: 100%;
+    width: 0;
+    background-color: var(--text-color);
+    transition: width 0.1s linear;
 }
 
 @media (max-width: 768px) {
     .image-wrapper {
-        width: 60vw;
-        height: 40vh;
-    }
-    
-    .image-container {
-        gap: 2rem;
-        padding: 2rem;
-    }
-
-    .subject-5 .gallery-image {
-        transform: scale(0.6);
-    }
-
-    .subject-5:hover .gallery-image {
-        transform: scale(0.65);
+        width: 90vw;
+        height: 60vh;
     }
 }
