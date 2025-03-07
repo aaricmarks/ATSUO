@@ -3,7 +3,7 @@ gsap.registerPlugin(ScrollTrigger);
 window.addEventListener('load', () => {
     const images = gsap.utils.toArray('.image-frame');
     const totalImages = images.length;
-    const scrollHeight = (totalImages + 1) * 100; // Extra 100vh for smooth ending
+    const scrollHeight = (totalImages + 0.5) * 100; // Reduced extra space since last image stays
 
     // Set up the scroll container
     document.body.style.height = `${scrollHeight}vh`;
@@ -28,18 +28,29 @@ window.addEventListener('load', () => {
         const duration = 1 / totalImages;
         const delay = i * duration;
 
-        tl.to(image, {
-            opacity: 1,
-            scale: 1,
-            duration: duration / 2,
-            ease: "power2.inOut"
-        }, delay)
-        .to(image, {
-            opacity: 0,
-            scale: 1.1,
-            duration: duration / 2,
-            ease: "power2.inOut"
-        }, delay + duration / 2);
+        if (i === images.length - 1) {
+            // Last image: fade in and stay visible
+            tl.to(image, {
+                opacity: 1,
+                scale: 1,
+                duration: duration / 2,
+                ease: "power2.inOut"
+            }, delay);
+        } else {
+            // All other images: fade in and out
+            tl.to(image, {
+                opacity: 1,
+                scale: 1,
+                duration: duration / 2,
+                ease: "power2.inOut"
+            }, delay)
+            .to(image, {
+                opacity: 0,
+                scale: 1.1,
+                duration: duration / 2,
+                ease: "power2.inOut"
+            }, delay + duration / 2);
+        }
     });
 
     // Add scroll progress indicator
